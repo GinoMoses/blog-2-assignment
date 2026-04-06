@@ -68,6 +68,17 @@
             </div>
 
             <div>
+                <label class="block text-sm font-medium text-gray-700 mb-3">Status</label>
+                <div class="flex items-center">
+                    <input type="hidden" name="is_published" value="0">
+                    <input type="checkbox" name="is_published" id="is_published" value="1" 
+                        {{ old('is_published', $post->is_published) ? 'checked' : '' }}
+                        class="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 h-5 w-5">
+                    <label for="is_published" class="ml-2 text-sm text-gray-700 cursor-pointer">Opublikuj</label>
+                </div>
+            </div>
+
+            <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2">Zdjęcie</label>
                 
                 @if($post->photo)

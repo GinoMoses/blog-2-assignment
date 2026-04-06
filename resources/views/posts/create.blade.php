@@ -67,6 +67,17 @@
             </div>
 
             <div>
+                <label class="block text-sm font-medium text-gray-700 mb-3">Status</label>
+                <div class="flex items-center">
+                    <input type="hidden" name="is_published" value="0">
+                    <input type="checkbox" name="is_published" id="is_published" value="1" 
+                        {{ old('is_published') ? 'checked' : '' }}
+                        class="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 h-5 w-5">
+                    <label for="is_published" class="ml-2 text-sm text-gray-700 cursor-pointer">Opublikuj od razu</label>
+                </div>
+            </div>
+
+            <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2">Zdjęcie</label>
                 <div id="drop-zone" class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-lg hover:border-indigo-400 transition cursor-pointer bg-gray-50">
                     <div id="upload-content" class="space-y-2 text-center">

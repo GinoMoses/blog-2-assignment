@@ -43,15 +43,23 @@
                         <button type="button" onclick="showDeleteModal('{{ route('posts.destroy', $post->slug) }}')" class="px-3 py-1 bg-red-100 text-red-800 text-xs font-semibold rounded-full hover:bg-red-200 transition">
                             Usuń
                         </button>
-                        @if ($post->is_published)
-                            <span class="px-3 py-1 bg-green-100 text-green-800 text-xs font-semibold rounded-full">
-                                Opublikowany
-                            </span>
-                        @else
-                            <span class="px-3 py-1 bg-gray-100 text-gray-800 text-xs font-semibold rounded-full">
-                                Szkic
-                            </span>
-                        @endif
+                        <form method="POST" action="{{ route('posts.update', $post->slug) }}" class="inline">
+                            @csrf
+                            @method('PUT')
+                            <input type="hidden" name="title" value="{{ $post->title }}">
+                            <input type="hidden" name="slug" value="{{ $post->slug }}">
+                            <input type="hidden" name="author" value="{{ $post->author }}">
+                            <input type="hidden" name="lead" value="{{ $post->lead }}">
+                            <input type="hidden" name="content" value="{{ $post->content }}">
+                            <input type="hidden" name="is_published" value="{{ $post->is_published ? '0' : '1' }}">
+                            @foreach($post->categories as $category)
+                                <input type="hidden" name="categories[]" value="{{ $category->id }}">
+                            @endforeach
+                            <input type="hidden" name="tags" value="{{ $post->tags->pluck('name')->implode(', ') }}">
+                            <button type="submit" class="px-3 py-1 {{ $post->is_published ? 'bg-yellow-100 text-yellow-800 hover:bg-yellow-200' : 'bg-green-100 text-green-800 hover:bg-green-200' }} text-xs font-semibold rounded-full transition">
+                                {{ $post->is_published ? 'Cofnij' : 'Publikuj' }}
+                            </button>
+                        </form>
                     </div>
                 </div>
 
@@ -75,16 +83,28 @@
                 </div>
 
                 <!-- Tags -->
-                @if($post->tags->count() > 0)
-                    <div class="mt-8 pt-6 border-t border-gray-200">
-                        <p class="text-sm text-gray-600 mb-3">Tagi:</p>
+                <div class="mt-8 pt-6 border-t border-gray-200">
+                    @if($post->is_published)
+                        <span class="inline-block px-3 py-1 bg-green-100 text-green-800 text-xs font-semibold rounded-full mb-3">
+                            Opublikowany
+                        </span>
+                    @else
+                        <span class="inline-block px-3 py-1 bg-gray-100 text-gray-800 text-xs font-semibold rounded-full mb-3">
+                            Szkic
+                        </span>
+                    @endif
+                    
+                    @if($post->tags->count() > 0 || $post->categories->count() > 0)
                         <div class="flex flex-wrap gap-2">
+                            @foreach($post->categories as $category)
+                                <span class="px-3 py-1 bg-indigo-100 text-indigo-800 text-sm rounded-full">#{{ $category->name }}</span>
+                            @endforeach
                             @foreach($post->tags as $tag)
                                 <span class="px-3 py-1 bg-gray-100 text-gray-700 text-sm rounded-full">#{{ $tag->name }}</span>
                             @endforeach
                         </div>
-                    </div>
-                @endif
+                    @endif
+                </div>
 
                 <!-- Social Share -->
                 <div class="mt-6 flex items-center gap-4">

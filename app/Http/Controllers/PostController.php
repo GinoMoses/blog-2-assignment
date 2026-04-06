@@ -30,7 +30,7 @@ class PostController extends Controller
             });
         }
 
-        $posts = $query->latest()->paginate(9)->withQueryString();
+        $posts = $query->with(['categories', 'tags'])->latest()->paginate(9)->withQueryString();
         $categories = Category::all();
 
         return view('posts.index', [
@@ -41,7 +41,7 @@ class PostController extends Controller
 
     public function show(string $slug)
     {
-        $post = Post::where('slug', $slug)->firstOrFail();
+        $post = Post::with(['categories', 'tags', 'comments'])->where('slug', $slug)->firstOrFail();
 
         return view('posts.show', [
             'post' => $post,
@@ -70,6 +70,7 @@ class PostController extends Controller
             'categories' => ['nullable', 'array'],
             'tags' => ['nullable', 'string'],
             'photo' => ['nullable', 'image', 'max:2048'],
+            'is_published' => ['nullable', 'boolean'],
         ]);
 
         $post = new Post;
@@ -79,6 +80,7 @@ class PostController extends Controller
         $post->lead = $parameters['lead'] ?? null;
         $post->author = $parameters['author'];
         $post->content = $parameters['content'];
+        $post->is_published = ! empty($parameters['is_published']);
 
         if ($request->hasFile('photo')) {
             $path = $request->file('photo')->store('posts', 'public');
@@ -157,6 +159,7 @@ class PostController extends Controller
             'tags' => ['nullable', 'string'],
             'photo' => ['nullable', 'image', 'max:2048'],
             'remove_photo' => ['nullable', 'string'],
+            'is_published' => ['nullable', 'boolean'],
         ]);
 
         $post->title = $parameters['title'];
@@ -164,6 +167,7 @@ class PostController extends Controller
         $post->lead = $parameters['lead'] ?? null;
         $post->author = $parameters['author'];
         $post->content = $parameters['content'];
+        $post->is_published = ! empty($parameters['is_published']);
 
         if ($request->has('remove_photo')) {
             if ($post->photo) {
