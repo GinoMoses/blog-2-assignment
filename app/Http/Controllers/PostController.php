@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Post;
 use App\Models\Tag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class PostController extends Controller
@@ -127,5 +128,82 @@ class PostController extends Controller
         $post->comments()->create($validated);
 
         return back()->with('success', 'Komentarz został dodany!');
+    }
+
+    public function edit(string $slug)
+    {
+        $post = Post::where('slug', $slug)->firstOrFail();
+        $categories = Category::all();
+        $tags = Tag::all();
+
+        return view('posts.edit', [
+            'post' => $post,
+            'categories' => $categories,
+            'tags' => $tags,
+        ]);
+    }
+
+    public function update(Request $request, string $slug)
+    {
+        $post = Post::where('slug', $slug)->firstOrFail();
+
+        $parameters = $request->validate([
+            'title' => ['required', 'string', 'max:255'],
+            'slug' => ['required', 'string', 'max:255', 'unique:posts,slug,'.$post->id],
+            'lead' => ['nullable', 'string'],
+            'author' => ['required', 'string', 'max:255'],
+            'content' => ['required', 'string'],
+            'categories' => ['nullable', 'array'],
+            'tags' => ['nullable', 'string'],
+            'photo' => ['nullable', 'image', 'max:2048'],
+            'remove_photo' => ['nullable', 'string'],
+        ]);
+
+        $post->title = $parameters['title'];
+        $post->slug = $parameters['slug'];
+        $post->lead = $parameters['lead'] ?? null;
+        $post->author = $parameters['author'];
+        $post->content = $parameters['content'];
+
+        if ($request->has('remove_photo')) {
+            if ($post->photo) {
+                Storage::disk('public')->delete($post->photo);
+                $post->photo = null;
+            }
+        } elseif ($request->hasFile('photo')) {
+            if ($post->photo) {
+                Storage::disk('public')->delete($post->photo);
+            }
+            $path = $request->file('photo')->store('posts', 'public');
+            $post->photo = $path;
+        }
+
+        $post->save();
+
+        $post->categories()->sync($parameters['categories'] ?? []);
+
+        $post->tags()->detach();
+        if (! empty($parameters['tags'])) {
+            $tagNames = array_map('trim', explode(',', $parameters['tags']));
+            $tagIds = [];
+
+            foreach ($tagNames as $tagName) {
+                if (empty($tagName)) {
+                    continue;
+                }
+                $tagSlug = Str::slug($tagName);
+                $tag = Tag::firstOrCreate(
+                    ['slug' => $tagSlug],
+                    ['name' => $tagName]
+                );
+                $tagIds[] = $tag->id;
+            }
+
+            if (! empty($tagIds)) {
+                $post->tags()->attach($tagIds);
+            }
+        }
+
+        return redirect()->route('posts.show', $post->slug)->with('success', 'Post został zaktualizowany!');
     }
 }

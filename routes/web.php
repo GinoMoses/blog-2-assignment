@@ -15,4 +15,6 @@ Route::get('/posts/create', [PostController::class, 'create'])->name('posts.crea
 
 Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
 Route::get('/posts/{slug}', [PostController::class, 'show'])->name('posts.show');
+Route::get('/posts/{slug}/edit', [PostController::class, 'edit'])->name('posts.edit');
+Route::put('/posts/{slug}', [PostController::class, 'update'])->name('posts.update');
 Route::post('/posts/{slug}/comments', [PostController::class, 'storeComment'])->name('posts.comments.store');

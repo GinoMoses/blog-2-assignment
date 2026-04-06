@@ -37,6 +37,9 @@
                         </div>
                     </div>
                     <div class="ml-auto flex gap-2">
+                        <a href="{{ route('posts.edit', $post->slug) }}" class="px-3 py-1 bg-indigo-100 text-indigo-800 text-xs font-semibold rounded-full hover:bg-indigo-200 transition">
+                            Edytuj
+                        </a>
                         @if ($post->is_published)
                             <span class="px-3 py-1 bg-green-100 text-green-800 text-xs font-semibold rounded-full">
                                 Opublikowany
