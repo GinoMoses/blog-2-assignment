@@ -206,4 +206,17 @@ class PostController extends Controller
 
         return redirect()->route('posts.show', $post->slug)->with('success', 'Post został zaktualizowany!');
     }
+
+    public function destroy(string $slug)
+    {
+        $post = Post::where('slug', $slug)->firstOrFail();
+
+        if ($post->photo) {
+            Storage::disk('public')->delete($post->photo);
+        }
+
+        $post->delete();
+
+        return redirect()->route('posts.index')->with('success', 'Post został usunięty!');
+    }
 }

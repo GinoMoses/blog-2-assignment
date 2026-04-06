@@ -40,6 +40,9 @@
                         <a href="{{ route('posts.edit', $post->slug) }}" class="px-3 py-1 bg-indigo-100 text-indigo-800 text-xs font-semibold rounded-full hover:bg-indigo-200 transition">
                             Edytuj
                         </a>
+                        <button type="button" onclick="showDeleteModal('{{ route('posts.destroy', $post->slug) }}')" class="px-3 py-1 bg-red-100 text-red-800 text-xs font-semibold rounded-full hover:bg-red-200 transition">
+                            Usuń
+                        </button>
                         @if ($post->is_published)
                             <span class="px-3 py-1 bg-green-100 text-green-800 text-xs font-semibold rounded-full">
                                 Opublikowany
@@ -227,5 +230,49 @@
         </section>
 
     </main>
+
+    <!-- Delete Confirmation Modal -->
+    <div id="deleteModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center">
+        <div class="bg-white rounded-lg shadow-xl max-w-md w-full mx-4 overflow-hidden">
+            <div class="p-6">
+                <div class="flex items-center justify-center w-12 h-12 mx-auto mb-4 bg-red-100 rounded-full">
+                    <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                    </svg>
+                </div>
+                <h3 class="text-lg font-medium text-gray-900 text-center mb-2">Usuń post</h3>
+                <p class="text-sm text-gray-500 text-center mb-6">Czy na pewno chcesz usunąć ten post? Tej operacji nie można cofnąć.</p>
+                <div class="flex gap-3">
+                    <button onclick="hideDeleteModal()" class="flex-1 px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition font-medium">
+                        Anuluj
+                    </button>
+                    <form id="deleteForm" method="POST" class="flex-1">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="w-full px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition font-medium">
+                            Usuń
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showDeleteModal(action) {
+            document.getElementById('deleteForm').action = action;
+            document.getElementById('deleteModal').classList.remove('hidden');
+        }
+
+        function hideDeleteModal() {
+            document.getElementById('deleteModal').classList.add('hidden');
+        }
+
+        document.getElementById('deleteModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                hideDeleteModal();
+            }
+        });
+    </script>
 
 </x-layout>
