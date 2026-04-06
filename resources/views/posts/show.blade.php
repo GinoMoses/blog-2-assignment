@@ -19,7 +19,7 @@
                 </div>
             @else
                 <div class="h-96 bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center">
-                    <span class="text-9xl">📝</span>
+                    <span class="text-9xl">{{ ['📝', '🚀', '💻', '⚡', '🎯', '🔥', '✨', '🌟', '💡', '🎨'][array_rand(['📝', '🚀', '💻', '⚡', '🎯', '🔥', '✨', '🌟', '💡', '🎨'])] }}</span>
                 </div>
             @endif
 
@@ -206,7 +206,7 @@
                                 </div>
                             @else
                                 <div class="h-32 bg-gradient-to-br from-green-500 to-teal-600 flex items-center justify-center">
-                                    <span class="text-5xl">📝</span>
+                                    <span class="text-5xl">{{ ['📝', '🚀', '💻', '⚡', '🎯', '🔥', '✨', '🌟', '💡', '🎨'][array_rand(['📝', '🚀', '💻', '⚡', '🎯', '🔥', '✨', '🌟', '💡', '🎨'])] }}</span>
                                 </div>
                             @endif
                             <div class="p-4">

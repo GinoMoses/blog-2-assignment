@@ -7,11 +7,16 @@
 .phpunit.result.cache
 /.fleet
 /.idea
+/.mcp
+/.mcp.json
+/.agents
 /.nova
 /.phpunit.cache
 /.vscode
 /.zed
 /auth.json
+/boost.json
+/opencode.json
 /node_modules
 /public/build
 /public/hot
@@ -22,3 +27,5 @@
 Homestead.json
 Homestead.yaml
 Thumbs.db
+/tests
+/AGENTS.md

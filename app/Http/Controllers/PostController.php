@@ -68,6 +68,7 @@ class PostController extends Controller
             'content' => ['required', 'string'],
             'categories' => ['nullable', 'array'],
             'tags' => ['nullable', 'string'],
+            'photo' => ['nullable', 'image', 'max:2048'],
         ]);
 
         $post = new Post;
@@ -77,6 +78,11 @@ class PostController extends Controller
         $post->lead = $parameters['lead'] ?? null;
         $post->author = $parameters['author'];
         $post->content = $parameters['content'];
+
+        if ($request->hasFile('photo')) {
+            $path = $request->file('photo')->store('posts', 'public');
+            $post->photo = $path;
+        }
 
         $post->save();
 

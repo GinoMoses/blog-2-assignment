@@ -42,7 +42,7 @@
                         </div>
                     @else
                         <div class="h-48 bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center">
-                            <span class="text-6xl">📝</span>
+                            <span class="text-6xl">{{ ['📝', '🚀', '💻', '⚡', '🎯', '🔥', '✨', '🌟', '💡', '🎨'][array_rand(['📝', '🚀', '💻', '⚡', '🎯', '🔥', '✨', '🌟', '💡', '🎨'])] }}</span>
                         </div>
                     @endif
                     <div class="p-6">
