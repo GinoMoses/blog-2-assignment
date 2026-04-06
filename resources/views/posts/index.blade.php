@@ -54,6 +54,10 @@
                             <div class="absolute top-3 right-3">
                                 <span class="px-2.5 py-1 bg-gray-900/80 dark:bg-gray-800/80 text-white text-xs font-medium rounded-lg backdrop-blur-sm">Szkic</span>
                             </div>
+                        @else
+                            <div class="absolute top-3 right-3">
+                                <span class="px-2.5 py-1 bg-green-600/80 text-white text-xs font-medium rounded-lg backdrop-blur-sm">Opublikowany</span>
+                            </div>
                         @endif
                     </div>
 

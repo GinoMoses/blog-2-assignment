@@ -86,7 +86,7 @@
                 <div class="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">
                     @if($post->is_published)
                         <span class="inline-block px-3 py-1 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 text-xs font-semibold rounded-full mb-3">
-                            Opowany
+                            Opublikowany
                         </span>
                     @else
                         <span class="inline-block px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-300 text-xs font-semibold rounded-full mb-3">
@@ -214,7 +214,7 @@
 
         <!-- Related Posts -->
         <section class="mt-12">
-            <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">Powiązane artykuły</h2>
+            <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">Ostatnie publikacje</h2>
             <div class="grid gap-6 md:grid-cols-3">
                 @php
                     $relatedPosts = \App\Models\Post::with(['categories', 'tags'])->where('id', '!=', $post->id)
