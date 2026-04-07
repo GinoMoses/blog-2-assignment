@@ -56,8 +56,8 @@ This project implements a complete blog system with the following features:
 ## Installation
 
 ```bash
-git clone https://github.com/zstio-pt/blog-2
-cd blog-2
+git clone https://github.com/GinoMoses/blog-2-assignment.git
+cd blog-2-assignment
 composer install
 npm install
 cp .env.example .env
