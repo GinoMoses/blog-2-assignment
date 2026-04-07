@@ -76,7 +76,7 @@
                 @endif
 
                 <!-- Content -->
-                <div class="prose prose-lg max-w-none dark:text-gray-300">
+                <div class="post-content prose prose-lg max-w-none dark:text-gray-300">
                     <p class="text-gray-700 dark:text-gray-300 mb-4 leading-relaxed whitespace-pre-line">
                         {!! $post->content !!}
                     </p>

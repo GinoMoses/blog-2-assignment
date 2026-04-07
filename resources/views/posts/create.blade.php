@@ -68,36 +68,23 @@
                 <input id="content" type="hidden" name="content" value="{{ old('content') }}">
                 <div class="trix-editor-wrapper">
                     <div class="editor-toolbar">
-                        <button type="button" class="editor-toolbar-btn" data-trix-attribute="bold" title="Pogrubienie">
+                        <button type="button" class="editor-toolbar-btn btn-bold" title="Pogrubienie">
                             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 4h8a4 4 0 014 4 4 4 0 01-4 4H6z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 12h9a4 4 0 014 4 4 4 0 01-4 4H6z"/></svg>
                         </button>
-                        <button type="button" class="editor-toolbar-btn" data-trix-attribute="italic" title="Kursywa">
+                        <button type="button" class="editor-toolbar-btn btn-italic" title="Kursywa">
                             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 4h4m-2 0v16m-4 0h8"/></svg>
                         </button>
-                        <button type="button" class="editor-toolbar-btn" data-trix-attribute="strike" title="Przekreślenie">
+                        <button type="button" class="editor-toolbar-btn btn-strike" title="Przekreślenie">
                             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M3 12h18"/></svg>
                         </button>
                         <div class="toolbar-divider"></div>
-                        <button type="button" class="editor-toolbar-btn" data-trix-attribute="heading1" title="Nagłówek 1">
-                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16"/></svg>
-                        </button>
-                        <button type="button" class="editor-toolbar-btn" data-trix-attribute="quote" title="Cytat">
-                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/></svg>
-                        </button>
-                        <button type="button" class="editor-toolbar-btn" data-trix-attribute="bulletList" title="Lista punktowana">
-                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
-                        </button>
-                        <button type="button" class="editor-toolbar-btn" data-trix-attribute="numberList" title="Lista numerowana">
-                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h10M7 16h10M4 8h.01M4 12h.01M4 16h.01"/></svg>
-                        </button>
-                        <div class="toolbar-divider"></div>
-                        <button type="button" class="editor-toolbar-btn" data-trix-attribute="link" title="Link">
+                        <button type="button" class="editor-toolbar-btn btn-link" title="Link">
                             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/></svg>
                         </button>
-                        <button type="button" class="editor-toolbar-btn" data-trix-action="undo" title="Cofnij">
+                        <button type="button" class="editor-toolbar-btn btn-undo" title="Cofnij">
                             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h10a5 5 0 015 5v2M3 10l6 6m-6-6l6-6"/></svg>
                         </button>
-                        <button type="button" class="editor-toolbar-btn" data-trix-action="redo" title="Ponów">
+                        <button type="button" class="editor-toolbar-btn btn-redo" title="Ponów">
                             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 10h-10a5 5 0 00-5 5v2m15-7l-6 6m6-6l-6-6"/></svg>
                         </button>
                     </div>
@@ -307,6 +294,25 @@
             background: #334155 !important;
         }
         
+        /* Code blocks in editor */
+        .trix-content pre {
+            background: var(--trix-code-bg, #1e1e1e) !important;
+            color: var(--trix-code-text, #d4d4d4) !important;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin: 1rem 0;
+            overflow-x: auto;
+            font-family: 'Fira Code', 'Monaco', 'Consolas', monospace;
+            font-size: 0.875rem;
+            line-height: 1.6;
+        }
+        .trix-content pre code {
+            background: transparent !important;
+            padding: 0;
+            color: inherit;
+            font-size: inherit;
+        }
+        
         /* Focus state */
         trix-editor.trix-focused {
             outline: none !important;
@@ -314,13 +320,15 @@
     </style>
 
     <script>
-        // Apply dark mode styles using cssText with !important
         function applyTrixTheme() {
             const trixEditor = document.querySelector('trix-editor');
             if (!trixEditor) return;
             
+            // Only check class - let the main app handle dark mode state
             const isDark = document.documentElement.classList.contains('dark');
-            const target = trixEditor.shadowRoot?.querySelector('.trix-content') || trixEditor;
+            
+            const shadowContent = trixEditor.shadowRoot?.querySelector('.trix-content');
+            const target = shadowContent || trixEditor;
             
             if (isDark) {
                 target.style.cssText = 'background-color: #111827 !important; color: #f1f5f9 !important; border: none !important;';
@@ -346,135 +354,203 @@
         const darkObserver = new MutationObserver(() => applyTrixTheme());
         darkObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
         
-        // Custom toolbar buttons
-        document.addEventListener('DOMContentLoaded', () => {
-            document.querySelectorAll('.editor-toolbar-btn[data-trix-attribute]').forEach(btn => {
-                btn.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const attribute = this.dataset.trixAttribute;
-                    const editor = document.querySelector('trix-editor').editor;
-                    if (attribute === 'heading1') {
-                        editor.activateAttribute('heading', 1);
-                    } else {
-                        editor.toggleAttribute(attribute);
-                    }
-                });
-            });
+        // Custom toolbar buttons - wait for Trix to initialize
+        function getTrixEditor() {
+            return document.querySelector('trix-editor');
+        }
+        
+        function getEditor() {
+            const editor = getTrixEditor();
+            return editor ? editor.editor : null;
+        }
+
+        function updateButtonStates() {
+            const editor = getEditor();
+            if (!editor) return;
             
-            document.querySelectorAll('.editor-toolbar-btn[data-trix-action]').forEach(btn => {
-                btn.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const action = this.dataset.trixAction;
-                    const editor = document.querySelector('trix-editor').editor;
-                    if (action === 'undo') editor.undo();
-                    else if (action === 'redo') editor.redo();
-                });
-            });
-            
-            // Sync Trix content to hidden input before submit
-            document.getElementById('post-form')?.addEventListener('submit', function() {
-                const trixEditor = document.querySelector('trix-editor');
-                const contentInput = document.getElementById('content');
-                if (trixEditor && contentInput) {
-                    contentInput.value = trixEditor.value;
-                }
-            });
-            
-            const titleInput = document.getElementById('title-input');
-            const slugInput = document.getElementById('slug-input');
+            document.querySelector('.btn-bold')?.classList.toggle('active', editor.attributeIsActive('bold'));
+            document.querySelector('.btn-italic')?.classList.toggle('active', editor.attributeIsActive('italic'));
+            document.querySelector('.btn-strike')?.classList.toggle('active', editor.attributeIsActive('strike'));
+        }
 
-            function slugify(text) {
-                return text.toString().toLowerCase()
-                    .replace(/\s+/g, '-')
-                    .replace(/[^\w\-]+/g, '')
-                    .replace(/\-\-+/g, '-')
-                    .replace(/^-+/, '')
-                    .replace(/-+$/, '');
+        // Bold
+        document.querySelector('.btn-bold')?.addEventListener('click', function(e) {
+            e.preventDefault();
+            const editor = getEditor();
+            if (!editor) return;
+            if (editor.attributeIsActive('bold')) {
+                editor.deactivateAttribute('bold');
+            } else {
+                editor.activateAttribute('bold', true);
             }
+            updateButtonStates();
+        });
 
-            if (titleInput && slugInput && !slugInput.value) {
-                titleInput.addEventListener('input', function() {
-                    slugInput.value = slugify(titleInput.value);
-                });
+        // Italic
+        document.querySelector('.btn-italic')?.addEventListener('click', function(e) {
+            e.preventDefault();
+            const editor = getEditor();
+            if (!editor) return;
+            if (editor.attributeIsActive('italic')) {
+                editor.deactivateAttribute('italic');
+            } else {
+                editor.activateAttribute('italic', true);
             }
+            updateButtonStates();
+        });
 
-            const dropZone = document.getElementById('drop-zone');
-            const fileInput = document.getElementById('photo');
-            const uploadContent = document.getElementById('upload-content');
-            const fileSelected = document.getElementById('file-selected');
-            const fileName = document.getElementById('file-name');
-            const fileSize = document.getElementById('file-size');
-            const removeFile = document.getElementById('remove-file');
-            const previewContainer = document.getElementById('preview-container');
-            const previewImage = document.getElementById('preview-image');
-
-            function formatFileSize(bytes) {
-                if (bytes < 1024) return bytes + ' B';
-                if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
-                return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+        // Strike
+        document.querySelector('.btn-strike')?.addEventListener('click', function(e) {
+            e.preventDefault();
+            const editor = getEditor();
+            if (!editor) return;
+            if (editor.attributeIsActive('strike')) {
+                editor.deactivateAttribute('strike');
+            } else {
+                editor.activateAttribute('strike', true);
             }
+            updateButtonStates();
+        });
 
-            function handleFile(file) {
-                if (file && file.type.startsWith('image/')) {
-                    fileName.textContent = file.name;
-                    fileSize.textContent = formatFileSize(file.size);
-                    uploadContent.classList.add('hidden');
-                    fileSelected.classList.remove('hidden');
-                    dropZone.classList.add('border-green-400', 'bg-green-50', 'dark:bg-green-900/20');
-
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        previewImage.src = e.target.result;
-                        previewContainer.classList.remove('hidden');
-                    }
-                    reader.readAsDataURL(file);
-                }
+        // Link
+        document.querySelector('.btn-link')?.addEventListener('click', function(e) {
+            e.preventDefault();
+            const editor = getEditor();
+            if (!editor) return;
+            const url = prompt('Wprowadź URL linku:');
+            if (url) {
+                editor.activateAttribute('href', url);
             }
+            updateButtonStates();
+        });
 
-            if (fileInput) {
-                fileInput.addEventListener('change', function(e) {
-                    handleFile(e.target.files[0]);
-                });
-            }
+        // Undo
+        document.querySelector('.btn-undo')?.addEventListener('click', function(e) {
+            e.preventDefault();
+            const editor = getEditor();
+            if (!editor) return;
+            editor.undo();
+            updateButtonStates();
+        });
 
-            if (removeFile) {
-                removeFile.addEventListener('click', function() {
-                    fileInput.value = '';
-                    uploadContent.classList.remove('hidden');
-                    fileSelected.classList.add('hidden');
-                    dropZone.classList.remove('border-green-400', 'bg-green-50', 'dark:bg-green-900/20');
-                    previewContainer.classList.add('hidden');
-                });
-            }
+        // Redo
+        document.querySelector('.btn-redo')?.addEventListener('click', function(e) {
+            e.preventDefault();
+            const editor = getEditor();
+            if (!editor) return;
+            editor.redo();
+            updateButtonStates();
+        });
 
-            if (dropZone) {
-                ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-                    dropZone.addEventListener(eventName, function(e) {
-                        e.preventDefault();
-                        e.stopPropagation();
-                    }, false);
-                });
-
-                ['dragenter', 'dragover'].forEach(eventName => {
-                    dropZone.addEventListener(eventName, function() {
-                        dropZone.classList.add('border-indigo-400', 'bg-indigo-50', 'dark:bg-indigo-900/20');
-                    }, false);
-                });
-
-                ['dragleave', 'drop'].forEach(eventName => {
-                    dropZone.addEventListener(eventName, function() {
-                        dropZone.classList.remove('border-indigo-400', 'bg-indigo-50', 'dark:bg-indigo-900/20');
-                    }, false);
-                });
-
-                dropZone.addEventListener('drop', function(e) {
-                    const files = e.dataTransfer.files;
-                    if (files.length > 0) {
-                        fileInput.files = files;
-                        handleFile(files[0]);
-                    }
-                }, false);
+        const trixEditorEl = getTrixEditor();
+        if (trixEditorEl) {
+            trixEditorEl.addEventListener('trix-selection-change', updateButtonStates);
+            trixEditorEl.addEventListener('trix-initialize', updateButtonStates);
+        }
+        
+        // Sync Trix content to hidden input before submit
+        document.getElementById('post-form')?.addEventListener('submit', function() {
+            const trixEditor = getTrixEditor();
+            const contentInput = document.getElementById('content');
+            if (trixEditor && contentInput) {
+                contentInput.value = trixEditor.value;
             }
         });
+        
+        const titleInput = document.getElementById('title-input');
+        const slugInput = document.getElementById('slug-input');
+
+        function slugify(text) {
+            return text.toString().toLowerCase()
+                .replace(/\s+/g, '-')
+                .replace(/[^\w\-]+/g, '')
+                .replace(/\-\-+/g, '-')
+                .replace(/^-+/, '')
+                .replace(/-+$/, '');
+        }
+
+        if (titleInput && slugInput && !slugInput.value) {
+            titleInput.addEventListener('input', function() {
+                slugInput.value = slugify(titleInput.value);
+            });
+        }
+
+        const dropZone = document.getElementById('drop-zone');
+        const fileInput = document.getElementById('photo');
+        const uploadContent = document.getElementById('upload-content');
+        const fileSelected = document.getElementById('file-selected');
+        const fileName = document.getElementById('file-name');
+        const fileSize = document.getElementById('file-size');
+        const removeFile = document.getElementById('remove-file');
+        const previewContainer = document.getElementById('preview-container');
+        const previewImage = document.getElementById('preview-image');
+
+        function formatFileSize(bytes) {
+            if (bytes < 1024) return bytes + ' B';
+            if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+            return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+        }
+
+        function handleFile(file) {
+            if (file && file.type.startsWith('image/')) {
+                fileName.textContent = file.name;
+                fileSize.textContent = formatFileSize(file.size);
+                uploadContent.classList.add('hidden');
+                fileSelected.classList.remove('hidden');
+                dropZone.classList.add('border-green-400', 'bg-green-50', 'dark:bg-green-900/20');
+
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    previewImage.src = e.target.result;
+                    previewContainer.classList.remove('hidden');
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+
+        if (fileInput) {
+            fileInput.addEventListener('change', function(e) {
+                handleFile(e.target.files[0]);
+            });
+        }
+
+        if (removeFile) {
+            removeFile.addEventListener('click', function() {
+                fileInput.value = '';
+                uploadContent.classList.remove('hidden');
+                fileSelected.classList.add('hidden');
+                dropZone.classList.remove('border-green-400', 'bg-green-50', 'dark:bg-green-900/20');
+                previewContainer.classList.add('hidden');
+            });
+        }
+
+        if (dropZone) {
+            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                dropZone.addEventListener(eventName, function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                }, false);
+            });
+
+            ['dragenter', 'dragover'].forEach(eventName => {
+                dropZone.addEventListener(eventName, function() {
+                    dropZone.classList.add('border-indigo-400', 'bg-indigo-50', 'dark:bg-indigo-900/20');
+                }, false);
+            });
+
+            ['dragleave', 'drop'].forEach(eventName => {
+                dropZone.addEventListener(eventName, function() {
+                    dropZone.classList.remove('border-indigo-400', 'bg-indigo-50', 'dark:bg-indigo-900/20');
+                }, false);
+            });
+
+            dropZone.addEventListener('drop', function(e) {
+                const files = e.dataTransfer.files;
+                if (files.length > 0) {
+                    fileInput.files = files;
+                    handleFile(files[0]);
+                }
+            }, false);
+        }
     </script>
 </x-layout>
