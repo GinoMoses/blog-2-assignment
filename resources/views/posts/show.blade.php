@@ -28,12 +28,12 @@
                 <!-- Meta Info -->
                 <div class="flex items-center gap-4 mb-6 pb-6 border-b border-gray-200 dark:border-gray-700">
                     <div class="flex items-center gap-3">
-                        <div class="w-12 h-12 bg-gray-300 dark:bg-gray-600 rounded-full flex items-center justify-center text-lg font-semibold text-gray-700 dark:text-gray-200">
+                        <div class="w-12 h-12 bg-gray-300 dark:bg-gray-600 rounded-full flex items-center justify-center text-lg font-semibold text-gray-700 dark:text-gray-200 flex-shrink-0">
                             {{ strtoupper(substr($post->author, 0, 2)) }}
                         </div>
                         <div>
                             <p class="font-semibold text-gray-900 dark:text-white">{{ $post->author }}</p>
-                            <p class="text-sm text-gray-500 dark:text-gray-400">Opublikowano: {{ $post->created_at->format('d F Y') }}</p>
+                            <p class="text-sm text-gray-500 dark:text-gray-400">{{ $post->created_at->format('d F Y') }} · {{ $post->reading_time }} min czytania · {{ $post->view_count_label }}</p>
                         </div>
                     </div>
                     <div class="ml-auto flex gap-2">
@@ -192,7 +192,7 @@
                 @forelse($post->comments->sortByDesc('created_at') as $comment)
                     <div class="flex gap-4">
                         <div class="flex-shrink-0">
-                            <div class="w-12 h-12 bg-gradient-to-br from-indigo-400 to-purple-600 rounded-full flex items-center justify-center text-white font-semibold">
+                            <div class="w-12 h-12 bg-gradient-to-br from-indigo-400 to-purple-600 rounded-full flex items-center justify-center text-white font-semibold flex-shrink-0">
                                 {{ strtoupper(substr($comment->author_name, 0, 2)) }}
                             </div>
                         </div>
@@ -246,7 +246,7 @@
                                 <h3 class="font-semibold text-gray-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 line-clamp-2 mb-2">
                                     {{ $related->title }}
                                 </h3>
-                                <p class="text-sm text-gray-500 dark:text-gray-400">{{ $related->created_at->diffForHumans() }}</p>
+                                <p class="text-sm text-gray-500 dark:text-gray-400">{{ $related->reading_time }} min · {{ $related->view_count_label }}</p>
                             </div>
                         </article>
                     </a>

@@ -81,13 +81,19 @@
                         </p>
 
                         <div class="flex items-center justify-between text-xs text-gray-400 dark:text-gray-500 pt-3 border-t border-gray-100 dark:border-gray-700">
-                            <div class="flex items-center gap-2">
+                            <div class="flex items-center gap-3">
                                 <div class="w-7 h-7 bg-gray-100 dark:bg-gray-700 rounded-lg text-xs font-medium flex items-center justify-center text-gray-600 dark:text-gray-300">
                                     {{ strtoupper(substr($post->author, 0, 1)) }}
                                 </div>
                                 <span>{{ $post->author }}</span>
                             </div>
-                            <span>{{ $post->created_at->format('d M') }}</span>
+                            <div class="flex items-center gap-3">
+                                <span>{{ $post->reading_time }} min</span>
+                                <span>·</span>
+                                <span>{{ $post->view_count_label }}</span>
+                                <span>·</span>
+                                <span>{{ $post->created_at->format('d M') }}</span>
+                            </div>
                         </div>
                     </div>
                 </article>

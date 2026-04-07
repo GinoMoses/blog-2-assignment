@@ -43,6 +43,8 @@ class PostController extends Controller
     {
         $post = Post::with(['categories', 'tags', 'comments'])->where('slug', $slug)->firstOrFail();
 
+        $post->incrementViewCount();
+
         return view('posts.show', [
             'post' => $post,
         ]);
