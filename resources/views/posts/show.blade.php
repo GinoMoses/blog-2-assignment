@@ -19,7 +19,7 @@
                 </div>
             @else
                 <div class="h-96 bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center">
-                    <span class="text-9xl">{{ ['📝', '🚀', '💻', '⚡', '🎯', '🔥', '✨', '🌟', '💡', '🎨'][array_rand(['📝', '🚀', '💻', '⚡', '🎯', '🔥', '✨', '🌟', '💡', '🎨'])] }}</span>
+                    <span class="text-9xl">{{ ['📝', '🚀', '💻', '⚡', '🎯', '🔥', '✨', '🌟', '💡', '🎨'][strlen($post->title) % 10] }}</span>
                 </div>
             @endif
 
@@ -103,6 +103,8 @@
                                 <span class="px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-sm rounded-full">#{{ $tag->name }}</span>
                             @endforeach
                         </div>
+                    @else
+                        <p class="text-sm text-gray-400 dark:text-gray-500">Brak kategorii ani tagów.</p>
                     @endif
                 </div>
 
@@ -207,7 +209,12 @@
                         </div>
                     </div>
                 @empty
-                    <p class="text-gray-500 dark:text-gray-400 text-center py-4">Brak komentarzy. Bądź pierwszy!</p>
+                    <div class="text-center py-8">
+                        <div class="w-12 h-12 mx-auto mb-3 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center">
+                            <span class="text-2xl">💬</span>
+                        </div>
+                        <p class="text-gray-500 dark:text-gray-400">Brak komentarzy. Bądź pierwszy!</p>
+                    </div>
                 @endforelse
             </div>
         </section>
@@ -232,7 +239,7 @@
                                 </div>
                             @else
                                 <div class="h-32 bg-gradient-to-br from-green-500 to-teal-600 flex items-center justify-center">
-                                    <span class="text-5xl">{{ ['📝', '🚀', '💻', '⚡', '🎯', '🔥', '✨', '🌟', '💡', '🎨'][array_rand(['📝', '🚀', '💻', '⚡', '🎯', '🔥', '✨', '🌟', '💡', '🎨'])] }}</span>
+                                    <span class="text-5xl">{{ ['📝', '🚀', '💻', '⚡', '🎯', '🔥', '✨', '🌟', '💡', '🎨'][strlen($related->title) % 10] }}</span>
                                 </div>
                             @endif
                             <div class="p-4">
@@ -244,7 +251,12 @@
                         </article>
                     </a>
                 @empty
-                    <p class="col-span-3 text-gray-500 dark:text-gray-400 text-center py-4">Brak powiązanych artykułów.</p>
+                    <div class="col-span-3 text-center py-8">
+                        <div class="w-12 h-12 mx-auto mb-3 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center">
+                            <span class="text-2xl">📄</span>
+                        </div>
+                        <p class="text-gray-500 dark:text-gray-400">Brak publikacji.</p>
+                    </div>
                 @endforelse
             </div>
         </section>

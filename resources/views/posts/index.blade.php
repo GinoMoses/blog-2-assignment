@@ -47,7 +47,7 @@
                             <img src="{{ asset('storage/' . $post->photo) }}" alt="{{ $post->title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
                         @else
                             <div class="w-full h-full bg-gradient-to-br from-indigo-500/20 to-purple-600/20 dark:from-indigo-900/40 dark:to-purple-900/40 flex items-center justify-center">
-                                <span class="text-5xl opacity-60">{{ ['📝', '🚀', '💻', '⚡', '🎯'][array_rand(['📝', '🚀', '💻', '⚡', '🎯'])] }}</span>
+                                <span class="text-5xl opacity-60">{{ ['📝', '🚀', '💻', '⚡', '🎯'][strlen($post->title) % 5] }}</span>
                             </div>
                         @endif
                         @if(!$post->is_published)
@@ -93,14 +93,25 @@
                 </article>
             @empty
                 <div class="col-span-full text-center py-16">
-                    <div class="w-16 h-16 mx-auto mb-4 bg-gray-100 dark:bg-gray-800 rounded-2xl flex items-center justify-center">
-                        <span class="text-3xl">📭</span>
-                    </div>
-                    <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-1">Brak postów</h3>
-                    <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">Nie ma jeszcze żadnych postów.</p>
-                    <a href="{{ route('posts.create') }}" class="inline-block px-4 py-2 text-sm font-medium bg-gray-900 dark:bg-white text-white dark:text-gray-900 rounded-xl hover:bg-gray-800 dark:hover:bg-gray-100 transition">
-                        Dodaj pierwszy post
-                    </a>
+                    @if(request('search') || request('category'))
+                        <div class="w-16 h-16 mx-auto mb-4 bg-gray-100 dark:bg-gray-800 rounded-2xl flex items-center justify-center">
+                            <span class="text-3xl">🔍</span>
+                        </div>
+                        <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-1">Brak wyników</h3>
+                        <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">Nie znaleziono postów pasujących do wyszukiwania.</p>
+                        <a href="{{ route('posts.index') }}" class="inline-block px-4 py-2 text-sm font-medium bg-gray-900 dark:bg-white text-white dark:text-gray-900 rounded-xl hover:bg-gray-800 dark:hover:bg-gray-100 transition">
+                            Wyczyść filtry
+                        </a>
+                    @else
+                        <div class="w-16 h-16 mx-auto mb-4 bg-gray-100 dark:bg-gray-800 rounded-2xl flex items-center justify-center">
+                            <span class="text-3xl">📭</span>
+                        </div>
+                        <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-1">Brak postów</h3>
+                        <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">Nie ma jeszcze żadnych postów.</p>
+                        <a href="{{ route('posts.create') }}" class="inline-block px-4 py-2 text-sm font-medium bg-gray-900 dark:bg-white text-white dark:text-gray-900 rounded-xl hover:bg-gray-800 dark:hover:bg-gray-100 transition">
+                            Dodaj pierwszy post
+                        </a>
+                    @endif
                 </div>
             @endforelse
 
