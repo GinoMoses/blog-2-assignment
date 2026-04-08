@@ -87,6 +87,7 @@
 
 <body class="h-full bg-gray-50 dark:bg-gray-900 transition-colors duration-200">
     @include('partials.navigation')
+    @include('partials.reading-progress')
 
     {{ $slot }}
 
