@@ -8,7 +8,7 @@
     @endif
 
     <!-- Main Content -->
-    <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
         <!-- Post Header -->
         <article class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden mb-8">

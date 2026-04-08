@@ -49,6 +49,39 @@ class Post extends Model
         return (int) ceil($words / 200);
     }
 
+    public function getReadingTimeLabelAttribute(): string
+    {
+        $minutes = $this->reading_time;
+
+        if ($minutes >= 60) {
+            $hours = floor($minutes / 60);
+            $remainingMinutes = $minutes % 60;
+            if ($remainingMinutes === 0) {
+                return "{$hours} ".$this->pluralizeHours($hours).' czytania';
+            }
+
+            return "{$hours}h {$remainingMinutes} min czytania";
+        }
+
+        return "{$minutes} min czytania";
+    }
+
+    private function pluralizeHours(int $count): string
+    {
+        $lastDigit = $count % 10;
+        $lastTwoDigits = $count % 100;
+
+        if ($lastTwoDigits >= 12 && $lastTwoDigits <= 14) {
+            return 'godzin';
+        }
+
+        return match ($lastDigit) {
+            1 => 'godzina',
+            2, 3, 4 => 'godziny',
+            default => 'godzin',
+        };
+    }
+
     public function incrementViewCount(): void
     {
         $this->increment('view_count');

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pl" class="h-full">
+<html lang="pl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -85,12 +85,12 @@
     @vite(['resources/css/app.css'])
 </head>
 
-<body class="h-full bg-gray-50 dark:bg-gray-900 transition-colors duration-200">
+<body class="min-h-screen flex flex-col bg-gray-50 dark:bg-gray-900 transition-colors duration-200">
     @include('partials.navigation')
     @include('partials.reading-progress')
-
+    <div class="flex-1">
     {{ $slot }}
-
+    </div>
     @include('partials.footer')
 
     <button id="back-to-top" class="fixed bottom-6 right-6 p-3 bg-gray-900 dark:bg-white text-white dark:text-gray-900 rounded-full shadow-lg opacity-0 invisible transition-all duration-300 hover:bg-gray-700 dark:hover:bg-gray-200 z-50">
